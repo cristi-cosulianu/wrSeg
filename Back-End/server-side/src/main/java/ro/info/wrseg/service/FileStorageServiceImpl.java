@@ -3,6 +3,7 @@ package ro.info.wrseg.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ro.info.wrseg.exception.InvalidFileExtensionException;
 import ro.info.wrseg.model.FileUpload;
 import ro.info.wrseg.repository.FileRepository;
 
@@ -22,12 +23,12 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public FileUpload save(MultipartFile multipartFile) {
         String fileName = randomUUID().toString();
-//        try {
+        try {
             String fileExtension = Objects.requireNonNull(multipartFile.getOriginalFilename()).split("\\.")[1];
-//        } catch (Exception ex) {
-//            throw new InvalidFileExtension(fileName);
-//        }
-        FileUpload fileUpload = new FileUpload(multipartFile, fileName, fileExtension);
-        return fileRepository.save(fileUpload);
+            FileUpload fileUpload = new FileUpload(multipartFile, fileName, fileExtension);
+            return fileRepository.save(fileUpload);
+        } catch (Exception ex) {
+            throw new InvalidFileExtensionException(fileName);
+        }
     }
 }

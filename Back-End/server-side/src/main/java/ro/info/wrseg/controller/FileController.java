@@ -15,6 +15,7 @@ import ro.info.wrseg.model.FileUpload;
 import ro.info.wrseg.service.FileStorageService;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/upload-file")
@@ -28,11 +29,11 @@ public class FileController {
 
     @PostMapping()
     public ResponseEntity<Resource> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-       FileUpload fileUpload = fileStorageService.save(multipartFile);
+        FileUpload fileUpload = fileStorageService.save(multipartFile);
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(multipartFile.getContentType()))
+                .contentType(MediaType.parseMediaType(Objects.requireNonNull(multipartFile.getContentType())))
                 .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + "file1" + "\"")
+                        "attachment; filename=\"" + fileUpload.getName() + "." + fileUpload.getExtension() + "\"")
                 .body(new ByteArrayResource(fileUpload.getMultipartFile().getBytes()));
     }
 }

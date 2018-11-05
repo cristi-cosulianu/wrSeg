@@ -16,22 +16,6 @@ public class FileUpload {
         this.extension = extension;
     }
 
-    //    public byte[] getBytes() {
-//        if (bytes == null) {
-//            bytes = new byte[]{};
-//        }
-//        return bytes.clone();
-//    }
-//
-//    public void setBytes(byte[] bytes) {
-//        if (bytes != null) {
-//            this.bytes = bytes;
-//        } else {
-//            this.bytes = new byte[]{};
-//        }
-//    }
-
-
     public MultipartFile getMultipartFile() {
         return multipartFile;
     }
