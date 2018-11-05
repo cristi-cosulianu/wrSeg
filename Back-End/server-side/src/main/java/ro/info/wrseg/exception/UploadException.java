@@ -9,7 +9,7 @@ public class UploadException extends RuntimeException {
         this("Error in uploading image");
     }
 
-    public UploadException(String exception) {
-        super(exception);
+    public UploadException(String fileName) {
+        super("Could not upload file with name " +  fileName);
     }
 }
