@@ -13,6 +13,7 @@ body{
     display:grid;
     grid-template-columns: 0.5fr 5fr 0.5fr;
     grid-template-rows: 0.5fr 5fr 1.5fr;
+    transition: 0.5s;
 }
 .wrapper-title{
     grid-row:1/2;
@@ -80,13 +81,26 @@ width:200px;
     color:black;
 }
 .open-sideNav{
-    
-  transition: .5s;
-  position: fixed;
-  right: 0;  
-  font-size:30px;
-  cursor:pointer;
-  margin-right:10px;
+    margin-right: 0px;
+    margin-left: auto;
+    margin-bottom:0;
+    margin-top:auto;
+    grid-row: 1/2;
+    grid-column: 3/4;
+    transition: .5s;
+    font-size:30px;
+    cursor:pointer;
+}
+.close-sideNav{
+    margin-right: 0px;
+    margin-left: auto;
+    margin-top: 0px;
+    margin-bottom: auto;
+    grid-row: 2/3;
+    grid-column: 3/4;    
+    transition: .5s; 
+    font-size:30px;
+    cursor:pointer;   
 }
 .sideNav{
     
