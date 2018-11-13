@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ro.info.wrseg.model.FileUpload;
 import ro.info.wrseg.service.FileStorageService;
+import ro.info.wrseg.service.ScriptRunnerService;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -21,19 +22,18 @@ import java.util.Objects;
 @RequestMapping("/upload-file")
 public class FileController {
     private FileStorageService fileStorageService;
+    private ScriptRunnerService scriptRunnerService;
 
     @Autowired
-    FileController(FileStorageService fileStorageService) {
+    FileController(FileStorageService fileStorageService, ScriptRunnerService scriptRunnerService) {
         this.fileStorageService = fileStorageService;
+        this.scriptRunnerService = scriptRunnerService;
     }
 
     @PostMapping()
-    public ResponseEntity<Resource> uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public String uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         FileUpload fileUpload = fileStorageService.save(multipartFile);
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(Objects.requireNonNull(multipartFile.getContentType())))
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + fileUpload.getName() + "." + fileUpload.getExtension() + "\"")
-                .body(new ByteArrayResource(fileUpload.getMultipartFile().getBytes()));
+        scriptRunnerService.run(fileUpload.getName());
+        return "{\"info\":\"data about image\"}";
     }
 }
