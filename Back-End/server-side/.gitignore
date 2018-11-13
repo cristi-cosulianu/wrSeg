@@ -4,3 +4,4 @@ target
 *.log
 logs
 ro-wrseg-logging
+dependency-reduced-pom.xml
